@@ -1,0 +1,39 @@
+# Euler Methods to solve non-linear ODE for a simple Pendulum
+import numpy as np
+import matplotlib.pyplot as plt
+
+def Euler(y,derivative,timestep):
+    y[i+1] = y[i] + (derivative * timestep)
+    return y
+    
+N = 250
+ti = 0
+tf = 10
+dt = (tf-ti) / (N-1)
+t = np.linspace(ti,tf,N)
+g = 9.81
+l = 1
+
+theta = np.zeros([N])
+omega = np.zeros([N])
+
+theta[0] = 0.2
+omega[0] = 0.0
+
+for i in range(0,N-1):
+    thetaDerivative = omega[i]
+    omegaDerivative = -(g/l)*np.sin(theta[i])
+    omega = Euler(omega,omegaDerivative,dt)
+
+    theta = Euler(theta,thetaDerivative,dt)
+
+plt.plot(t,omega)
+plt.xlabel('time(seconds)')
+plt.ylabel('theta(radians)')
+
+plt.plot(t,omega)
+plt.xlabel('time(seconds)')
+plt.ylabel('theta(radians)')
+
+# Oscillations grows with time due to inaccuracy of the Euler Numerical Method. Hence Euler's Method should only be
+# used to solve first order linear ODE's
